@@ -11,7 +11,7 @@ export default defineConfig({
 
   // Configuration pour déploiement dans Spring Boot
   //base: "./", // ou base: '/nom-de-votre-war/' si problème
-  base: "/dasboard/",
+  base: "/orangeportal/",
 
   build: {
     // Dossier de sortie (par défaut 'dist')

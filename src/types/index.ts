@@ -20,6 +20,7 @@ export interface Message {
   clientId: string;
   phone: string;
   recdTime: string;
+  nosms: number;
 }
 
 export interface User {

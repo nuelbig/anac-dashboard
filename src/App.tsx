@@ -6,7 +6,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 // const router = createBrowserRouter(routes);
 
 const router = createBrowserRouter(routes, {
-  basename: "/dasboard",
+  basename: "/orangeportal",
 });
 
 function App() {

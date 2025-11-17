@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Message } from "../types";
-import { Activity, User, TrendingUp, Clock, Phone, Calendar, RefreshCw } from "lucide-react";
+import { Activity, User, TrendingUp, Clock, Phone, Calendar } from "lucide-react";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -82,7 +82,7 @@ export default function MessagesDashboard() {
     queryFn: getAllMessages,
     staleTime: 1000 * 60 * 5, // Les données restent "fraîches" pendant 5 minutes
     refetchOnWindowFocus: true, // Refetch quand l'utilisateur revient sur l'onglet
-    refetchInterval: 1000 * 60 * 2, // Refetch automatique toutes les 2 minutes
+    //refetchInterval: 1000 * 60 * 2, // Refetch automatique toutes les 2 minutes
     retry: 3, // Réessayer 3 fois en cas d'échec
   });
 
@@ -265,7 +265,7 @@ export default function MessagesDashboard() {
         
         <div className="flex items-center gap-3">
           {/* Bouton de refresh manuel */}
-          <button
+          {/* <button
             onClick={() => refetch()}
             disabled={isFetching}
             className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center gap-2 shadow-sm disabled:opacity-50"
@@ -275,7 +275,7 @@ export default function MessagesDashboard() {
             <span className="text-sm font-medium">
               {isFetching ? 'Actualisation...' : 'Actualiser'}
             </span>
-          </button>
+          </button> */}
 
           {/* Sélecteur de période */}
           <div className="flex items-center space-x-2 bg-white dark:bg-gray-800 rounded-xl p-1.5 shadow-md border border-gray-200 dark:border-gray-700">
@@ -300,9 +300,9 @@ export default function MessagesDashboard() {
       {isFetching && !isLoading && (
         <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 flex items-center gap-3">
           <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-600 border-t-transparent"></div>
-          <span className="text-sm text-blue-700 dark:text-blue-300">
+          {/* <span className="text-sm text-blue-700 dark:text-blue-300">
             Mise à jour des données en cours...
-          </span>
+          </span> */}
         </div>
       )}
 

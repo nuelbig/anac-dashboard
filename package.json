@@ -1,46 +1,129 @@
 {
+  
   "name": "portalwirepick",
+  
   "private": true,
+  
   "version": "0.0.0",
+  
+  "homepage": ".",
+  
   "type": "module",
+  
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+  
+    
+  "dev": "vite --host",
+  
+    
+  "build": "tsc -b && vite build",
+  
+    
+  "lint": "eslint .",
+  
+    
+  "preview": "vite preview"
+  
   },
+  
   "dependencies": {
-    "@sentry/react": "^10.19.0",
-    "@tailwindcss/vite": "^4.1.4",
-    "@tanstack/react-query": "^5.90.3",
-    "@tanstack/react-query-devtools": "^5.90.2",
-    "axios": "^1.12.2",
-    "chart.js": "^4.4.0",
-    "date-fns": "^2.30.0",
-    "js-cookie": "^3.0.5",
-    "jwt-decode": "^4.0.0",
-    "lucide-react": "^0.344.0",
-    "portalwirepick": "file:",
-    "react": "^18.3.1",
-    "react-chartjs-2": "^5.2.0",
-    "react-dom": "^18.3.1",
-    "react-hot-toast": "^2.4.1",
-    "react-router-dom": "^7.6.1",
-    "sweetalert2": "^11.26.2",
-    "tailwindcss": "^4.1.4"
+  
+    
+  "@sentry/react": "^10.19.0",
+  
+    
+  "@tailwindcss/vite": "^4.1.4",
+  
+    
+  "@tanstack/react-query": "^5.90.3",
+  
+    
+  "@tanstack/react-query-devtools": "^5.90.2",
+  
+    
+  "axios": "^1.12.2",
+  
+    
+  "chart.js": "^4.4.0",
+  
+    
+  "date-fns": "^2.30.0",
+  
+    
+  "js-cookie": "^3.0.5",
+  
+    
+  "jwt-decode": "^4.0.0",
+  
+    
+  "lucide-react": "^0.344.0",
+  
+    
+  "portalwirepick": "file:",
+  
+    
+  "react": "^18.3.1",
+  
+    
+  "react-chartjs-2": "^5.2.0",
+  
+    
+  "react-dom": "^18.3.1",
+  
+    
+  "react-hot-toast": "^2.4.1",
+  
+    
+  "react-router-dom": "^7.6.1",
+  
+    
+  "sweetalert2": "^11.26.2",
+  
+    
+  "tailwindcss": "^4.1.4",
+  
+    
+  "xlsx": "^0.18.5"
+  
   },
+  
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "@types/js-cookie": "^3.0.6",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.22.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "typescript": "~5.7.2",
-    "typescript-eslint": "^8.26.1",
-    "vite": "^6.3.1"
+  
+    
+  "@eslint/js": "^9.22.0",
+  
+    
+  "@types/js-cookie": "^3.0.6",
+  
+    
+  "@types/react": "^19.0.10",
+  
+    
+  "@types/react-dom": "^19.0.4",
+  
+    
+  "@vitejs/plugin-react": "^4.3.4",
+  
+    
+  "eslint": "^9.22.0",
+  
+    
+  "eslint-plugin-react-hooks": "^5.2.0",
+  
+    
+  "eslint-plugin-react-refresh": "^0.4.19",
+  
+    
+  "globals": "^16.0.0",
+  
+    
+  "typescript": "~5.7.2",
+  
+    
+  "typescript-eslint": "^8.26.1",
+  
+    
+  "vite": "^6.3.1"
+  
   }
 }
