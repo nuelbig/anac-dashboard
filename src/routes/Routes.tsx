@@ -4,11 +4,11 @@ import Layout from "../components/layout/Layout";
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/Login";
 //import Dashboard from "../pages/Dashboard";
-
-
 import NotFound from "../pages/NotFound";
-import Messages from "../pages/Messages";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../components/dashoard/Dashboard";
+import Departments from "../components/incidents/departments";
+
+
 
 
 
@@ -36,11 +36,11 @@ export const routes: RouteObject[] = [
         path: "dashboard",
         element: <Dashboard />,
       },
+
       {
-        path: "messages",
-        element: <Messages />,
+        path: "incidents",
+        element: <Departments />,
       },
-      
     ],
   },
   {

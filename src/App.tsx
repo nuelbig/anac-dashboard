@@ -6,7 +6,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 // const router = createBrowserRouter(routes);
 
 const router = createBrowserRouter(routes, {
-  basename: "/orangeportal",
+  basename: "/anactogo",
 });
 
 function App() {

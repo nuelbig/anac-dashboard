@@ -1,6 +1,6 @@
 export type ThemeMode = "light" | "dark";
 
-export const baseUrl = "https://ussd.wirepick.com/orangerca-api";
+export const baseUrl = "http://localhost:8080";
 
 
 export interface ApiResponse<T> {

@@ -23,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       name: "Dashboard",
       icon: <LayoutDashboard size={20} />,
     },
-    { path: "/messages", name: "Messages", icon: <MessageCircle size={20} /> },
+    { path: "/incidents", name: "Incidents", icon: <MessageCircle size={20} /> },
   ];
 
 
@@ -49,11 +49,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">
           <Link to="/dashboard" className="flex items-center">
-            <img
-              src={Logo}
-              alt=""
-              className={`w-[80%] dark:bg-white rounded-sm px-1"}`}
-            />
+        <img
+        src={Logo}
+        alt=""
+        className="w-12 h-auto dark:bg-white rounded-sm px-1"
+      />
+
+
           </Link>
           <button
             onClick={toggleSidebar}

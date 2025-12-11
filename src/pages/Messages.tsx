@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import MessageTable from "../components/messages/MessageTable";
+import MessageTable from "../components/incidents/Incidents";
 import { Message } from "../types";
-import { getAllMessages } from "../services/message";
+import { getAllMessages } from "../services/departmentService";
 import { useState } from "react";
 import * as XLSX from 'xlsx';
 
