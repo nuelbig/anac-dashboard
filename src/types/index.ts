@@ -1,11 +1,20 @@
 export type ThemeMode = "light" | "dark";
 
-export const baseUrl = "http://localhost:8080";
+// En développement, utiliser le proxy Vite (pas d'URL complète)
+// Le proxy dans vite.config.ts redirige /api vers http://localhost:8080
+export const baseUrl = "";
 
 
 export interface ApiResponse<T> {
   body: T;
+}
 
+// Structure de réponse du backend Spring Boot
+export interface DataResponse<T> {
+  timestamp: string;
+  message: string;
+  data: T;
+  error: boolean;
 }
 
 export interface ModifyPassword {
@@ -34,7 +43,8 @@ export interface User {
 
 export interface AuthResponse {
   access_token: string;
-  refresh_token: string;
+  refresh_token: string | null;
+  expires_in: number;
   name: string;
   role: "DEV" | "ADMIN" | "NETWORK" | "SYSTEM";
 }

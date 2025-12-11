@@ -7,7 +7,7 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { AuthResponse, baseUrl, User } from "../types";
+import { AuthResponse, DataResponse, baseUrl, User } from "../types";
 import api from "../services/api";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
@@ -188,15 +188,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await api.post<AuthResponse>(
-        baseUrl + "/api/v1/auth/authenticate",
+      const response = await api.post<DataResponse<AuthResponse>>(
+        baseUrl + "/api/v1/auth/login",
         {
           email,
           password,
         }
       );
 
-      const { access_token, refresh_token, name, role } = response.data;
+      // Le backend retourne une DataResponse qui enveloppe les données dans un champ "data"
+      const { access_token, refresh_token, name, role } = response.data.data;
 
       // Décoder le token pour obtenir l'expiration
       const decoded = jwtDecode<JwtPayload>(access_token);
@@ -208,12 +209,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         secure: window.location.protocol === 'https:',
         sameSite: 'strict'
       });
-      
-      Cookies.set('refresh_token', refresh_token, {
-        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 jours
-        secure: window.location.protocol === 'https:',
-        sameSite: 'strict'
-      });
+
+      // Stocker le refresh_token seulement s'il existe
+      if (refresh_token) {
+        Cookies.set('refresh_token', refresh_token, {
+          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 jours
+          secure: window.location.protocol === 'https:',
+          sameSite: 'strict'
+        });
+      }
 
       api.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
 

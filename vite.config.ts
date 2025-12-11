@@ -40,10 +40,30 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      // Proxy des appels API vers Spring Boot en développement
+      // Proxy tous les endpoints API vers Spring Boot en développement
       "/api": {
         target: "http://localhost:8080",
         changeOrigin: true,
+      },
+      "/incidents": {
+        target: "http://localhost:8080/api/v1",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/incidents/, "/incidents"),
+      },
+      "/utilisateurs": {
+        target: "http://localhost:8080/api/v1",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/utilisateurs/, "/utilisateurs"),
+      },
+      "/roles": {
+        target: "http://localhost:8080/api/v1",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/roles/, "/roles"),
+      },
+      "/stats": {
+        target: "http://localhost:8080/api/v1",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/stats/, "/stats"),
       },
     },
   },
