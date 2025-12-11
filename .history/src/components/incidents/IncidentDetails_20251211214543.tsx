@@ -309,6 +309,7 @@ const IncidentDetails: React.FC = () => {
                     console.log("✅ Image chargée avec succès:", buildPhotoUrl(incident.photoUrl!));
                   }}
                 />
+              </div>
             </Card>
           )}
 

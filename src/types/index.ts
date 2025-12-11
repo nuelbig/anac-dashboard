@@ -3,6 +3,7 @@ export type ThemeMode = "light" | "dark";
 // En développement, utiliser le proxy Vite (pas d'URL complète)
 // Le proxy dans vite.config.ts redirige /api vers http://localhost:8080
 export const baseUrl = "";
+export const SERVER_URL = "http://localhost:8080";
 
 
 export interface ApiResponse<T> {

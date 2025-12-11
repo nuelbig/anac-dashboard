@@ -284,10 +284,17 @@ const IncidentDetails: React.FC = () => {
                 <ImageIcon size={20} />
                 Photo de l'incident
               </h2>
-              <img
-                src={buildPhotoUrl(incident.photoUrl)}
-                alt="Photo incident"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600"
+              <div className="space-y-2">
+                {/* Debug info en développement */}
+                {import.meta.env.DEV && (
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-mono break-all">
+                    URL: {buildPhotoUrl(incident.photoUrl)}
+                  </p>
+                )}
+                <img
+                  src={buildPhotoUrl(incident.photoUrl)}
+                  alt="Photo incident"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600"
                   onError={(e) => {
                     // Gestion d'erreur si l'image ne peut pas être chargée
                     const imageUrl = buildPhotoUrl(incident.photoUrl!);
@@ -309,6 +316,7 @@ const IncidentDetails: React.FC = () => {
                     console.log("✅ Image chargée avec succès:", buildPhotoUrl(incident.photoUrl!));
                   }}
                 />
+              </div>
             </Card>
           )}
 

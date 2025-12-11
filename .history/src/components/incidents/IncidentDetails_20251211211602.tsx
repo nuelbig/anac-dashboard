@@ -31,7 +31,6 @@ import IncidentBadge from "../ui/IncidentBadge";
 /**
  * Construit l'URL complète de la photo de l'incident
  * Gère les cas où photoUrl est déjà une URL complète ou un chemin relatif
- * Format attendu: http://localhost:8080/api/v1/uploads/incidents/...
  */
 const buildPhotoUrl = (photoUrl: string): string => {
   // Si photoUrl est déjà une URL complète (http:// ou https://), on la retourne telle quelle
@@ -40,24 +39,29 @@ const buildPhotoUrl = (photoUrl: string): string => {
     return photoUrl;
   }
 
+  const isDev = import.meta.env.DEV;
+  
+  // En développement, utiliser le proxy Vite pour les chemins qui commencent par /uploads ou /api
+  if (isDev) {
+    // Si le chemin commence par /uploads, utiliser le proxy directement
+    if (photoUrl.startsWith("/uploads")) {
+      console.log("🔗 URL via proxy /uploads (dev):", photoUrl);
+      return photoUrl;
+    }
+    // Si le chemin commence par /api/v1/uploads, utiliser le proxy
+    if (photoUrl.startsWith("/api/v1/uploads") || photoUrl.startsWith("/api/uploads")) {
+      console.log("🔗 URL via proxy /api (dev):", photoUrl);
+      return photoUrl;
+    }
+  }
+
+  // En production ou si le chemin ne correspond pas aux patterns ci-dessus
   // Construire l'URL complète avec SERVER_URL
   const baseUrl = SERVER_URL.endsWith("/") ? SERVER_URL.slice(0, -1) : SERVER_URL;
-  
-  // Normaliser le chemin : s'assurer qu'il commence par /api/v1/uploads
-  let path = photoUrl.startsWith("/") ? photoUrl : `/${photoUrl}`;
-  
-  // Si le chemin commence par /uploads mais pas par /api/v1/uploads, ajouter /api/v1
-  if (path.startsWith("/uploads") && !path.startsWith("/api/v1/uploads")) {
-    path = `/api/v1${path}`;
-  }
-  // Si le chemin ne commence ni par /api ni par /uploads, ajouter /api/v1/uploads
-  else if (!path.startsWith("/api") && !path.startsWith("/uploads")) {
-    path = `/api/v1/uploads${path.startsWith("/") ? path : `/${path}`}`;
-  }
-  
+  const path = photoUrl.startsWith("/") ? photoUrl : `/${photoUrl}`;
   const fullUrl = `${baseUrl}${path}`;
   
-  console.log("🌐 URL construite:", fullUrl, "(photoUrl original:", photoUrl, ")");
+  console.log("🌐 URL construite:", fullUrl, "(photoUrl original:", photoUrl, ", DEV:", isDev, ")");
   return fullUrl;
 };
 
@@ -284,10 +288,17 @@ const IncidentDetails: React.FC = () => {
                 <ImageIcon size={20} />
                 Photo de l'incident
               </h2>
-              <img
-                src={buildPhotoUrl(incident.photoUrl)}
-                alt="Photo incident"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600"
+              <div className="space-y-2">
+                {/* Debug info en développement */}
+                {import.meta.env.DEV && (
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-mono break-all">
+                    URL: {buildPhotoUrl(incident.photoUrl)}
+                  </p>
+                )}
+                <img
+                  src={buildPhotoUrl(incident.photoUrl)}
+                  alt="Photo incident"
+                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600"
                   onError={(e) => {
                     // Gestion d'erreur si l'image ne peut pas être chargée
                     const imageUrl = buildPhotoUrl(incident.photoUrl!);
@@ -309,6 +320,7 @@ const IncidentDetails: React.FC = () => {
                     console.log("✅ Image chargée avec succès:", buildPhotoUrl(incident.photoUrl!));
                   }}
                 />
+              </div>
             </Card>
           )}
 

@@ -4,14 +4,17 @@
  */
 
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   ArrowLeft,
+  Edit,
+  Trash2,
   MapPin,
   Calendar,
   User,
   FileText,
+  Brain,
   Image as ImageIcon,
 } from "lucide-react";
 import Swal from "sweetalert2";
@@ -21,6 +24,7 @@ import {
   getIncidentById,
   deleteIncident,
   updateIncidentStatus,
+  assignIncident,
 } from "../../services/incidentService";
 import { SERVER_URL } from "../../types";
 import { StatutIncident } from "../../types/incident";
@@ -31,34 +35,19 @@ import IncidentBadge from "../ui/IncidentBadge";
 /**
  * Construit l'URL complète de la photo de l'incident
  * Gère les cas où photoUrl est déjà une URL complète ou un chemin relatif
- * Format attendu: http://localhost:8080/api/v1/uploads/incidents/...
  */
 const buildPhotoUrl = (photoUrl: string): string => {
   // Si photoUrl est déjà une URL complète (http:// ou https://), on la retourne telle quelle
   if (photoUrl.startsWith("http://") || photoUrl.startsWith("https://")) {
-    console.log("✅ Photo URL complète détectée:", photoUrl);
     return photoUrl;
   }
 
-  // Construire l'URL complète avec SERVER_URL
+  // Sinon, on construit l'URL en ajoutant SERVER_URL
+  // On s'assure qu'il y a un slash entre SERVER_URL et photoUrl
   const baseUrl = SERVER_URL.endsWith("/") ? SERVER_URL.slice(0, -1) : SERVER_URL;
+  const path = photoUrl.startsWith("/") ? photoUrl : `/${photoUrl}`;
   
-  // Normaliser le chemin : s'assurer qu'il commence par /api/v1/uploads
-  let path = photoUrl.startsWith("/") ? photoUrl : `/${photoUrl}`;
-  
-  // Si le chemin commence par /uploads mais pas par /api/v1/uploads, ajouter /api/v1
-  if (path.startsWith("/uploads") && !path.startsWith("/api/v1/uploads")) {
-    path = `/api/v1${path}`;
-  }
-  // Si le chemin ne commence ni par /api ni par /uploads, ajouter /api/v1/uploads
-  else if (!path.startsWith("/api") && !path.startsWith("/uploads")) {
-    path = `/api/v1/uploads${path.startsWith("/") ? path : `/${path}`}`;
-  }
-  
-  const fullUrl = `${baseUrl}${path}`;
-  
-  console.log("🌐 URL construite:", fullUrl, "(photoUrl original:", photoUrl, ")");
-  return fullUrl;
+  return `${baseUrl}${path}`;
 };
 
 const IncidentDetails: React.FC = () => {
@@ -285,30 +274,10 @@ const IncidentDetails: React.FC = () => {
                 Photo de l'incident
               </h2>
               <img
-                src={buildPhotoUrl(incident.photoUrl)}
+                src={`${SERVER_URL}${incident.photoUrl}`}
                 alt="Photo incident"
                 className="w-full rounded-lg border border-gray-300 dark:border-gray-600"
-                  onError={(e) => {
-                    // Gestion d'erreur si l'image ne peut pas être chargée
-                    const imageUrl = buildPhotoUrl(incident.photoUrl!);
-                    console.error("❌ Erreur de chargement de l'image:", imageUrl);
-                    console.error("PhotoUrl original:", incident.photoUrl);
-                    console.error("SERVER_URL:", SERVER_URL);
-                    const target = e.target as HTMLImageElement;
-                    // Afficher un message d'erreur au lieu de masquer l'image
-                    target.style.display = "none";
-                    const errorDiv = document.createElement("div");
-                    errorDiv.className = "p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg text-sm";
-                    errorDiv.innerHTML = `
-                      <p><strong>Impossible de charger l'image</strong></p>
-                      <p class="text-xs mt-1 font-mono break-all">URL: ${imageUrl}</p>
-                    `;
-                    target.parentElement?.appendChild(errorDiv);
-                  }}
-                  onLoad={() => {
-                    console.log("✅ Image chargée avec succès:", buildPhotoUrl(incident.photoUrl!));
-                  }}
-                />
+              />
             </Card>
           )}
 
@@ -401,13 +370,11 @@ const IncidentDetails: React.FC = () => {
               Utilisateurs
             </h2>
             <div className="space-y-3 text-sm">
-              {incident.declarePar && (
-                <div>
-                  <label className="text-gray-600 dark:text-gray-400">Déclaré par</label>
-                  <p className="text-gray-900 dark:text-white font-medium">{incident.declarePar.nom}</p>
-                  <p className="text-gray-600 dark:text-gray-400 text-xs">{incident.declarePar.email}</p>
-                </div>
-              )}
+              <div>
+                <label className="text-gray-600 dark:text-gray-400">Déclaré par</label>
+                <p className="text-gray-900 dark:text-white font-medium">{incident.declarePar.nom}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-xs">{incident.declarePar.email}</p>
+              </div>
 
               {incident.assigneA && (
                 <div>
