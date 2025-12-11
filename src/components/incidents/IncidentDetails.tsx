@@ -171,7 +171,7 @@ const IncidentDetails: React.FC = () => {
         <div>
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Incident {incident.trackingId}
+              Incident {incident.trackingId?.substring(0, 12)}
             </h1>
             <IncidentBadge type="statut" value={incident.statut} size="md" />
           </div>
@@ -188,19 +188,7 @@ const IncidentDetails: React.FC = () => {
             <ArrowLeft size={18} />
             Retour
           </Button>
-          <Link to={`/incidents/${id}/edit`}>
-            <Button className="flex items-center gap-2 bg-yellow-600 hover:bg-yellow-700">
-              <Edit size={18} />
-              Modifier
-            </Button>
-          </Link>
-          <Button
-            onClick={handleDelete}
-            className="flex items-center gap-2 bg-red-600 hover:bg-red-700"
-          >
-            <Trash2 size={18} />
-            Supprimer
-          </Button>
+          
         </div>
       </div>
 
@@ -256,18 +244,7 @@ const IncidentDetails: React.FC = () => {
             </div>
           </Card>
 
-          {/* Analyse IA */}
-          {incident.analyseIA && (
-            <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-              <h2 className="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2">
-                <Brain size={20} />
-                Analyse IA
-              </h2>
-              <p className="text-blue-800 dark:text-blue-200 whitespace-pre-wrap">
-                {incident.analyseIA}
-              </p>
-            </Card>
-          )}
+  
 
           {/* Photo */}
           {incident.photoUrl && (

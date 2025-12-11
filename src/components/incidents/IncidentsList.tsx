@@ -164,11 +164,11 @@ const IncidentsList: React.FC = () => {
             <Filter size={18} />
             Filtres
           </Button>
-          <Link to="/incidents/new">
+          {/* <Link to="/incidents/new">
             <Button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700">
               + Nouvel Incident
             </Button>
-          </Link>
+          </Link> */}
         </div>
       </div>
 
@@ -245,7 +245,7 @@ const IncidentsList: React.FC = () => {
       )}
 
       {/* SEARCH BAR */}
-      <Card>
+      {/* <Card>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search size={20} className="text-gray-400" />
@@ -258,7 +258,7 @@ const IncidentsList: React.FC = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-      </Card>
+      </Card> */}
 
       {/* TABLE */}
       <Card>
@@ -355,21 +355,15 @@ const IncidentsList: React.FC = () => {
                           <Eye size={18} />
                         </Link>
 
-                        <Link
+                        {/* <Link
                           to={`/incidents/${incident.id}/edit`}
                           className="text-yellow-600 hover:text-yellow-800 dark:text-yellow-400 dark:hover:text-yellow-300"
                           title="Modifier l'incident"
                         >
                           <Edit size={18} />
-                        </Link>
+                        </Link> */}
 
-                        <button
-                          onClick={() => handleDelete(incident.id!, incident.trackingId)}
-                          className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
-                          title="Supprimer l'incident"
-                        >
-                          <Trash2 size={18} />
-                        </button>
+                      
                       </div>
                     </td>
                   </tr>
