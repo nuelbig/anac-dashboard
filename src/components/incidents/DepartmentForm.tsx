@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Input from "../../pages/UiElements/Input";
-import Button from "../../pages/UiElements/Button";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
 import { Department } from "../../types/department";
 
 interface DepartmentFormProps {

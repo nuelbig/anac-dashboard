@@ -15,8 +15,6 @@ import {
   uploadIncidentPhoto,
 } from "../../services/incidentService";
 import {
-  TypeIncident,
-  PrioriteIncident,
   StatutIncident,
   INCIDENT_TYPE_LABELS,
   INCIDENT_TYPE_CODES,
@@ -25,7 +23,6 @@ import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Input from "../ui/Input";
 import Textarea from "../ui/Textarea";
-import Select from "../ui/Select";
 
 const EditIncident: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -61,7 +58,7 @@ const EditIncident: React.FC = () => {
     if (incident) {
       setTitre(incident.titre);
       setDescription(incident.description);
-      setStatut(incident.statut);
+      setStatut(incident.statut || "EN_ATTENTE");
       setLocalisation(incident.localisation || "");
       setLatitude(incident.latitude ? String(incident.latitude) : "");
       setLongitude(incident.longitude ? String(incident.longitude) : "");
@@ -76,7 +73,7 @@ const EditIncident: React.FC = () => {
   // Update mutation
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: number; data: any }) => updateIncident(id, data),
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       // If there's a new photo, upload it
       if (newPhoto && incident?.id) {
         try {
@@ -302,15 +299,16 @@ const EditIncident: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Statut
               </label>
-              <Select
+              <select
                 value={statut}
                 onChange={(e) => setStatut(e.target.value as StatutIncident)}
+                className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm"
               >
                 <option value="EN_ATTENTE">En attente</option>
                 <option value="EN_COURS">En cours</option>
                 <option value="RESOLU">Résolu</option>
                 <option value="REJETE">Rejeté</option>
-              </Select>
+              </select>
             </div>
           </div>
         </Card>

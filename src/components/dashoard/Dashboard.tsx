@@ -30,7 +30,7 @@ const Card = ({ title, children, className = "" }: any) => (
 );
 
 const StatCard = ({ icon: Icon, title, value, trend, color = "blue" }: any) => {
-  const colorClasses = {
+  const colorClasses: Record<string, string> = {
     blue: "text-blue-500",
     green: "text-green-500",
     purple: "text-purple-500",
@@ -58,7 +58,7 @@ const StatCard = ({ icon: Icon, title, value, trend, color = "blue" }: any) => {
 };
 
 const ProgressBar = ({ percentage, color = "blue" }: any) => {
-  const colorClasses = {
+  const colorClasses: Record<string, string> = {
     blue: "bg-blue-500",
     yellow: "bg-yellow-500",
     red: "bg-red-500",

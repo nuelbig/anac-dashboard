@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Edit, Building2, Info } from "lucide-react";
 import { getDepartmentById } from "../../services/departmentService";
 import { Department } from "../../types/department";
-import Card from "../../pages/UiElements/Card";
-import Button from "../../pages/UiElements/Button";
+import Card from "../ui/Card";
+import Button from "../ui/Button";
 
 const DepartmentDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();

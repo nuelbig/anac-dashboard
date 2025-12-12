@@ -14,7 +14,7 @@ import Card from "../ui/Card";
 
 const Departments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const currentPage: number = 1;
   const recordPerPage: number = 5;
 
   const queryClient = useQueryClient();

@@ -197,7 +197,7 @@ export const getIncidentsByStatus = async (statut: StatutIncident) => {
  */
 export const getIncidentStats = async () => {
   const response = await api.get("/incidents/stats");
-  return extractResponseData<{totalIncidents: number; enAttente: number; enCours: number; resolus: number; rejetes: number; critique: number; elevee: number; moyenne: number; faible: number}>(response);
+  return extractResponseData<{totalIncidents: number; enAttente: number; enCours: number; resolus: number; rejetes: number; critique: number; elevee: number; moyenne: number; faible: number}>(response as unknown as Record<string, unknown>);
 };
 
 /**
@@ -205,7 +205,7 @@ export const getIncidentStats = async () => {
  */
 export const getIncidentCountByType = async () => {
   const response = await api.get("/incidents/stats/type");
-  return extractResponseData<Record<TypeIncident, number>>(response);
+  return extractResponseData<Record<TypeIncident, number>>(response as unknown as Record<string, unknown>);
 };
 
 /**

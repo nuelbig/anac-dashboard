@@ -5,13 +5,11 @@
 
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Edit, Eye, Search, Trash2, Filter, Download } from "lucide-react";
-import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import { Eye, Filter } from "lucide-react";
 
 import {
   getIncidents,
-  deleteIncident,
   searchIncidents,
 } from "../../services/incidentService";
 import {
@@ -32,8 +30,6 @@ const IncidentsList: React.FC = () => {
   const [filterPriorite, setFilterPriorite] = useState<PrioriteIncident | "">("");
   const [showFilters, setShowFilters] = useState(false);
   const recordPerPage: number = 10;
-
-  const queryClient = useQueryClient();
 
   // Fetch incidents avec pagination
   const {
@@ -61,43 +57,43 @@ const IncidentsList: React.FC = () => {
   });
 
   // Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: deleteIncident,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["incidents"] });
-      Swal.fire({
-        title: "Supprimé !",
-        text: "L'incident a été supprimé avec succès.",
-        icon: "success",
-        confirmButtonColor: "#0066CC",
-      });
-    },
-    onError: () => {
-      Swal.fire({
-        title: "Erreur",
-        text: "Impossible de supprimer l'incident.",
-        icon: "error",
-        confirmButtonColor: "#CC0000",
-      });
-    },
-  });
+  // const deleteMutation = useMutation({
+  //   mutationFn: deleteIncident,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["incidents"] });
+  //     Swal.fire({
+  //       title: "Supprimé !",
+  //       text: "L'incident a été supprimé avec succès.",
+  //       icon: "success",
+  //       confirmButtonColor: "#0066CC",
+  //     });
+  //   },
+  //   onError: () => {
+  //     Swal.fire({
+  //       title: "Erreur",
+  //       text: "Impossible de supprimer l'incident.",
+  //       icon: "error",
+  //       confirmButtonColor: "#CC0000",
+  //     });
+  //   },
+  // });
 
-  const handleDelete = (id: number, trackingId: string) => {
-    Swal.fire({
-      title: "Confirmer la suppression",
-      html: `Êtes-vous sûr de vouloir supprimer l'incident <strong>${trackingId}</strong> ?<br/>Cette action est irréversible.`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#CC0000",
-      cancelButtonColor: "#666666",
-      confirmButtonText: "Oui, supprimer",
-      cancelButtonText: "Annuler",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteMutation.mutate(id);
-      }
-    });
-  };
+  // const handleDelete = (id: number, trackingId: string) => {
+  //   Swal.fire({
+  //     title: "Confirmer la suppression",
+  //     html: `Êtes-vous sûr de vouloir supprimer l'incident <strong>${trackingId}</strong> ?<br/>Cette action est irréversible.`,
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#CC0000",
+  //     cancelButtonColor: "#666666",
+  //     confirmButtonText: "Oui, supprimer",
+  //     cancelButtonText: "Annuler",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       deleteMutation.mutate(id);
+  //     }
+  //   });
+  // };
 
   // Filtrage local par recherche de texte
   const filteredIncidents = useMemo(() => {
@@ -336,7 +332,7 @@ const IncidentsList: React.FC = () => {
                     </td>
 
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">
-                      {incident.declarePar.nom}
+                      {incident.declarePar?.nom || "N/A"}
                     </td>
 
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">

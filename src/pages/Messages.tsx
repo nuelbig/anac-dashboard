@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import MessageTable from "../components/incidents/Incidents";
-import { Message } from "../types";
-import { getAllMessages } from "../services/departmentService";
+// import { useQuery } from "@tanstack/react-query";
+// import MessageTable from "../components/incidents/Incidents";
+// import { Message } from "../types";
+// import { getAllMessages } from "../services/departmentService";
 import { useState } from "react";
 import * as XLSX from 'xlsx';
 
@@ -10,16 +10,8 @@ const Messages: React.FC = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const {
-    data: messages = [],
-    isLoading,
-    error,
-  } = useQuery<Message[]>({
-    queryKey: ["messages"],
-    queryFn: getAllMessages,
-    staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: false,
-  });
+  const messages: any[] = [];
+  const error = null;
 
   // Trier les messages du plus récent au plus ancien
   const sortedMessages = [...messages].sort(
@@ -194,7 +186,7 @@ const exportToExcel = () => {
         </div>
       </div>
 
-      {error ? (
+      {error !== null ? (
         <div className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 p-4 rounded-lg border border-red-200 dark:border-red-800">
           <div className="flex items-center space-x-2">
             <svg
@@ -211,7 +203,7 @@ const exportToExcel = () => {
             <span className="font-medium">Failed to load messages</span>
           </div>
           <p className="mt-1 text-sm">
-            {error instanceof Error ? error.message : "An unexpected error occurred"}
+            An unexpected error occurred
           </p>
         </div>
       ) : (
@@ -225,7 +217,8 @@ const exportToExcel = () => {
               <span className="text-blue-600 dark:text-blue-400">Filters active</span>
             )}
           </div>
-          <MessageTable messages={filteredMessages} isLoading={isLoading} />
+          {/* <MessageTable messages={filteredMessages} isLoading={isLoading} /> */}
+          <div className="text-center text-gray-500 py-8">Message table component not yet implemented</div>
         </>
       )}
     </div>

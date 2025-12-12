@@ -19,17 +19,14 @@ import {
   INCIDENT_TYPE_LABELS,
   INCIDENT_TYPE_CODES,
 } from "../../types/incident";
-import { useAuth } from "../../context/AuthContext";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Input from "../ui/Input";
 import Textarea from "../ui/Textarea";
-import Select from "../ui/Select";
 
 const CreateIncident: React.FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { user } = useAuth();
 
   // Form state
   const [titre, setTitre] = useState("");
@@ -264,9 +261,10 @@ const CreateIncident: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Type d'incident OACI
               </label>
-              <Select
+              <select
                 value={typeIncident}
                 onChange={(e) => setTypeIncident(e.target.value as TypeIncident | "")}
+                className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm"
               >
                 <option value="">Laisser l'IA déterminer</option>
                 {Object.entries(INCIDENT_TYPE_LABELS).map(([value, label]) => (
@@ -274,7 +272,7 @@ const CreateIncident: React.FC = () => {
                     [{INCIDENT_TYPE_CODES[value as TypeIncident]}] {label}
                   </option>
                 ))}
-              </Select>
+              </select>
             </div>
 
             {/* Priorité */}
@@ -282,16 +280,17 @@ const CreateIncident: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Priorité
               </label>
-              <Select
+              <select
                 value={priorite}
                 onChange={(e) => setPriorite(e.target.value as PrioriteIncident | "")}
+                className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm"
               >
                 <option value="">Laisser l'IA déterminer</option>
                 <option value="CRITIQUE">Critique</option>
                 <option value="ELEVEE">Élevée</option>
                 <option value="MOYENNE">Moyenne</option>
                 <option value="FAIBLE">Faible</option>
-              </Select>
+              </select>
             </div>
           </div>
         </Card>

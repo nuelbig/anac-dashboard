@@ -19,7 +19,6 @@ import Swal from "sweetalert2";
 
 import {
   getIncidentById,
-  deleteIncident,
   updateIncidentStatus,
 } from "../../services/incidentService";
 import { SERVER_URL } from "../../types";
@@ -78,28 +77,28 @@ const IncidentDetails: React.FC = () => {
   });
 
   // Delete mutation
-  const deleteMutation = useMutation({
-    mutationFn: deleteIncident,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["incidents"] });
-      Swal.fire({
-        title: "Supprimé !",
-        text: "L'incident a été supprimé avec succès.",
-        icon: "success",
-        confirmButtonColor: "#0066CC",
-      }).then(() => {
-        navigate("/incidents");
-      });
-    },
-    onError: () => {
-      Swal.fire({
-        title: "Erreur",
-        text: "Impossible de supprimer l'incident.",
-        icon: "error",
-        confirmButtonColor: "#CC0000",
-      });
-    },
-  });
+  // const deleteMutation = useMutation({
+  //   mutationFn: deleteIncident,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["incidents"] });
+  //     Swal.fire({
+  //       title: "Supprimé !",
+  //       text: "L'incident a été supprimé avec succès.",
+  //       icon: "success",
+  //       confirmButtonColor: "#0066CC",
+  //     }).then(() => {
+  //       navigate("/incidents");
+  //     });
+  //   },
+  //   onError: () => {
+  //     Swal.fire({
+  //       title: "Erreur",
+  //       text: "Impossible de supprimer l'incident.",
+  //       icon: "error",
+  //       confirmButtonColor: "#CC0000",
+  //     });
+  //   },
+  // });
 
   // Update status mutation
   const updateStatusMutation = useMutation({
@@ -125,24 +124,24 @@ const IncidentDetails: React.FC = () => {
     },
   });
 
-  const handleDelete = () => {
-    if (!incident) return;
+  // const handleDelete = () => {
+  //   if (!incident) return;
 
-    Swal.fire({
-      title: "Confirmer la suppression",
-      html: `Êtes-vous sûr de vouloir supprimer l'incident <strong>${incident.trackingId}</strong> ?<br/>Cette action est irréversible.`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#CC0000",
-      cancelButtonColor: "#666666",
-      confirmButtonText: "Oui, supprimer",
-      cancelButtonText: "Annuler",
-    }).then((result) => {
-      if (result.isConfirmed && incident.id) {
-        deleteMutation.mutate(incident.id);
-      }
-    });
-  };
+  //   Swal.fire({
+  //     title: "Confirmer la suppression",
+  //     html: `Êtes-vous sûr de vouloir supprimer l'incident <strong>${incident.trackingId}</strong> ?<br/>Cette action est irréversible.`,
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#CC0000",
+  //     cancelButtonColor: "#666666",
+  //     confirmButtonText: "Oui, supprimer",
+  //     cancelButtonText: "Annuler",
+  //   }).then((result) => {
+  //     if (result.isConfirmed && incident.id) {
+  //       deleteMutation.mutate(incident.id);
+  //     }
+  //   });
+  // };
 
   const handleStatusChange = async () => {
     if (!incident || !incident.id) return;
